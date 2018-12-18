@@ -35,6 +35,7 @@ public class Incident implements Comparable<Incident> {
 	public boolean artifactEnvironment;
 	public boolean socialTrainer;
 	public boolean socialOthers;
+	public boolean socialObervators;
 
 	@Override
 	public int compareTo(Incident o) {

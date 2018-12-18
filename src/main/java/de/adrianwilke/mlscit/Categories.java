@@ -67,6 +67,8 @@ public class Categories {
 
 		socialOthers,
 
+		socialObservators,
+
 		// observations
 
 		cnc,
@@ -142,6 +144,9 @@ public class Categories {
 		if (incident.socialOthers) {
 			categories.get(Category.socialOthers.name()).add(incident);
 		}
+		if (incident.socialObervators) {
+			categories.get(Category.socialObservators.name()).add(incident);
+		}
 
 		if (observations.get(incident.observation).cnc) {
 			categories.get(Category.cnc.name()).add(incident);
@@ -197,6 +202,8 @@ public class Categories {
 			return "sTrainer";
 		} else if (category.equals(Category.socialOthers.name())) {
 			return "sOther";
+		} else if (category.equals(Category.socialObservators.name())) {
+			return "sObser";
 		} else if (category.equals(Category.cnc.name())) {
 			return "CNC";
 		} else if (category.equals(Category.conventional.name())) {

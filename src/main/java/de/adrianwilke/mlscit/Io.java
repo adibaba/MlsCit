@@ -80,16 +80,17 @@ public class Io {
 
 			incident.socialTrainer = !csvRecord.get(9).isBlank();
 			incident.socialOthers = !csvRecord.get(10).isBlank();
-			incident.processWork = !csvRecord.get(11).isBlank();
-			incident.processLearn = !csvRecord.get(12).isBlank();
-			incident.artifactDrawing = !csvRecord.get(13).isBlank();
-			incident.artifactContents = !csvRecord.get(14).isBlank();
-			incident.artifactProtocols = !csvRecord.get(15).isBlank();
-			incident.artifactUserExperience = !csvRecord.get(16).isBlank();
-			incident.artifactHardware = !csvRecord.get(17).isBlank();
-			incident.artifactMachines = !csvRecord.get(18).isBlank();
-			incident.artifactWorkpiece = !csvRecord.get(19).isBlank();
-			incident.artifactEnvironment = !csvRecord.get(20).isBlank();
+			incident.socialObervators = !csvRecord.get(11).isBlank();
+			incident.processWork = !csvRecord.get(12).isBlank();
+			incident.processLearn = !csvRecord.get(13).isBlank();
+			incident.artifactDrawing = !csvRecord.get(14).isBlank();
+			incident.artifactContents = !csvRecord.get(15).isBlank();
+			incident.artifactProtocols = !csvRecord.get(16).isBlank();
+			incident.artifactUserExperience = !csvRecord.get(17).isBlank();
+			incident.artifactHardware = !csvRecord.get(18).isBlank();
+			incident.artifactMachines = !csvRecord.get(19).isBlank();
+			incident.artifactWorkpiece = !csvRecord.get(20).isBlank();
+			incident.artifactEnvironment = !csvRecord.get(21).isBlank();
 
 			incidents.put(incident.number, incident);
 		}
