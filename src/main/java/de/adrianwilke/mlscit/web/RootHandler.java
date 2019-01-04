@@ -1,6 +1,9 @@
 package de.adrianwilke.mlscit.web;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -54,7 +57,8 @@ public class RootHandler extends AbstractHttpHandler {
 		htmlBuilder.append("</tr>");
 	}
 
-	void correlationsToTableRow(StringBuilder htmlBuilder, Map<String, Set<Incident>> correlations, String first) {
+	void correlationsToTableRow(StringBuilder htmlBuilder, Map<String, Set<Incident>> correlations, String categoryKey)
+			throws IOException {
 		htmlBuilder.append("<tr>");
 		htmlBuilder.append("<td>");
 		htmlBuilder.append("<a href=\"/");
@@ -62,14 +66,42 @@ public class RootHandler extends AbstractHttpHandler {
 		htmlBuilder.append("?");
 		htmlBuilder.append(CategoryHandler.CAT);
 		htmlBuilder.append("=");
-		htmlBuilder.append(first);
+		htmlBuilder.append(categoryKey);
 		htmlBuilder.append("\">");
-		htmlBuilder.append(first);
+		htmlBuilder.append(categoryKey);
 		htmlBuilder.append("</a>");
 		htmlBuilder.append("</td>");
+
+		if (!correlations.containsKey(categoryKey)) {
+			throw new IOException("Could not find category: " + categoryKey);
+		}
+		int numberOfIncidentsInCategory = correlations.get(categoryKey).size();
+
+		DecimalFormat decimalFormat = new DecimalFormat("#.00");
+		decimalFormat.setRoundingMode(RoundingMode.HALF_EVEN);
+		DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols();
+		otherSymbols.setDecimalSeparator('.');
+		otherSymbols.setGroupingSeparator(',');
+		decimalFormat.setDecimalFormatSymbols(otherSymbols);
+
+		boolean evilLatexHack = false;
 		for (Set<Incident> incidents : correlations.values()) {
 			htmlBuilder.append("<td>");
-			htmlBuilder.append(incidents.size());
+
+			if (evilLatexHack) {
+				double percent = 1.0 * incidents.size() / numberOfIncidentsInCategory;
+				if (percent == 1) {
+					htmlBuilder.append("\\textbf{");
+					htmlBuilder.append(incidents.size());
+					htmlBuilder.append("}");
+				} else {
+					htmlBuilder.append(decimalFormat.format(percent));
+				}
+				htmlBuilder.append(" &");
+			} else {
+				htmlBuilder.append(incidents.size());
+			}
+
 			htmlBuilder.append("</td>");
 		}
 		htmlBuilder.append("</tr>");
